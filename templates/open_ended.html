@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{logo_name}} Assessment Test</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/open_ended.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('session_page') }}">
+                <img src="{{ url_for('static', filename='WeCare_bg.png') }}" alt="WeCare Logo" style="height: 55px;">
+            </a>
+            <div class="navbar-text d-none d-lg-block">
+                <span class="navbar-title">📝 Open-ended Questionnaire</span>
+                <!-- <small class="navbar-subtitle d-block">✨ Answer honestly to help us support you 💙</small> -->
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('session_page') }}">
+                            <i class="fas fa-arrow-left"></i> Back to Dashboard
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 pt-4">
+        <div class="header">
+            <h1>📝 Open-ended Questionnaire</h1>
+            <p class="subtitle">✨ Please answer all questions honestly. Your responses will help us understand how to better support you. 💙</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <div class="progress-text">
+                Progress: <span id="progress-percentage">0%</span> Complete 🌟
+            </div>
+        </div>
+
+        <form action="{{ url_for('submit_opended') }}" method="POST">
+            {% for question in questions %}
+            <div class="question-container">
+                <label class="question-label">👀 {{ question }}</label>
+                <input type="text" name="{{ question }}" placeholder="Enter your response (complete sentence)" required>
+            </div>
+            {% endfor %}
+            
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{{ url_for('session_page') }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+                <button type="submit" class="btn btn-primary" id="submit-btn">
+                    Submit <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <footer>
+        <img src="{{ url_for('static', filename='WeCareheart.png') }}" alt="Logo">
+        <span>Made with ❤️ by Team WeCare</span>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const questions = document.querySelectorAll('input[type="text"]');
+        const progressBar = document.getElementById('progress');
+        const progressPercentage = document.getElementById('progress-percentage');
+        const submitButton = document.getElementById('submit-btn');
+        const form = document.querySelector('form');
+
+        // Initialize progress bar at 0%
+        progressBar.style.width = '0%';
+        progressPercentage.textContent = '0%';
+
+        // Update progress bar based on user inputs
+        questions.forEach((question) => {
+            question.addEventListener('input', () => {
+                let filledCount = 0;
+                questions.forEach(input => {
+                    if (input.value.trim() !== '') {
+                        filledCount++;
+                    }
+                });
+
+                const progress = Math.floor((filledCount / questions.length) * 100);
+                progressBar.style.width = `${progress}%`;
+                progressPercentage.textContent = `${progress}%`;
+                
+                // Change progress color when complete
+                if (progress === 100) {
+                    progressBar.style.background = 'linear-gradient(90deg, #4CAF50 0%, #2E7D32 100%)';
+                } else {
+                    progressBar.style.background = 'linear-gradient(90deg, #4481eb 0%, #04befe 100%)';
+                }
+            });
+        });
+
+        // Disable the submit button after click
+        form.addEventListener('submit', (event) => {
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Submitting...';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{{ logo_name }} Login Page</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nav.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        /* Toast Styling */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1050;
+        }
+
+        /* Error input styling */
+        .input-error {
+            border: 2px solid red !important;
+            animation: shake 0.3s ease-in-out;
+        }
+
+        /* Shake Animation */
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+        }
+
+        .error-text {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="{{ url_for('static', filename='WeCare_bg.png') }}" alt="WeCare Logo" style="height: 55px; width: auto;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">🏠 Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">📝 Register</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-sm-6 form-container">
+                <h2>🔐 Login To Continue</h2>
+
+                <form action="/login" method="POST">
+                    <div class="form-group">
+                        <label for="email">📧 Email Address:</label>
+                        <input type="email" class="form-control {{ 'input-error' if error }}" id="email" 
+                               placeholder="Enter your email" name="email"
+                               value="{{ request.form['email'] if 'email' in request.form else '' }}" required>
+                        {% if error %}
+                            <small class="error-text">⚠️ Invalid email or password.</small>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd">🔑 Password:</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control {{ 'input-error' if error }}" id="pwd" 
+                                   placeholder="Enter your password" name="password" required>
+                                   <div class="input-group-append">
+                                    <button class="btn btn-outline-dark" type="button" id="togglePassword">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                        </div>
+                        <a href="/forgot_password" class="btn btn-link">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="btn btn-dark btn-block">Login</button>
+                    <a href="/register" class="btn btn-primary btn-block">Register</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <img src="{{ url_for('static', filename='WeCareheart.png') }}" alt="Logo">
+        <span>Made with 💡 by Team WeCare</span>
+    </footer>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container">
+        <!-- <div id="error-toast" class="toast bg-danger text-white" role="alert" aria-live="assertive" aria-atomic="true" data-delay="4000">
+            <div class="toast-header">
+                <strong class="mr-auto">⚠️ Error</strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body">
+                {{ error }}
+            </div>
+        </div> -->
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // If an error exists, show the toast and auto-hide after 4 seconds
+            {% if error %}
+                $("#error-toast").toast('show');
+            {% endif %}
+        });
+        function togglePassword() {
+            const passwordField = document.getElementById('pwd');
+            const toggleIcon = document.getElementById('toggleIcon');
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = "password";
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+        // Password visibility toggle
+            document.getElementById('togglePassword').addEventListener('click', function() {
+                const passwordField = document.getElementById('pwd');
+                const icon = this.querySelector('i');
+                
+                if (passwordField.type === 'password') {
+                    passwordField.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passwordField.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+    </script>
+
+</body>
+
+</html>

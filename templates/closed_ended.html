@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{logo_name}} Questionnaire</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/closed_ended.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+</head>
+<body>
+    <!-- Navigation Bar with Title -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('session_page') }}">
+                <img src="{{ url_for('static', filename='WeCare_bg.png') }}" alt="WeCare Logo" style="height: 55px;">
+            </a>
+            <div class="navbar-text d-none d-lg-block">
+                <span class="navbar-title">📝 Close-ended Questionnaire</span>
+                <!-- <small class="navbar-subtitle d-block">✨ Answer all questions to help us support you 💙</small> -->
+            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('session_page') }}">
+                            <i class="fas fa-arrow-left"></i> Back to Dashboard
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5 pt-4">
+        <div class="header">
+            <h1>📝 Close-ended Questionnaire</h1>
+            <p class="subtitle">✨ Your honest answers will help us provide better support.</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <div class="progress-text">
+                Progress: <span id="progress-percentage">0</span>% Complete 🌟
+            </div>
+        </div>
+
+        <form class="assessment-form" action="{{ url_for('submit_close_ended') }}" method="POST">
+            {% for question in questions %}
+            <div class="question-container">
+                <label class="question-label">❓ {{ question }}</label>
+                <div class="radio-group">
+                    <label class="radio-option">
+                        <input type="radio" name="{{ question }}" value="Yes" required onchange="updateProgress()">
+                        <span>✅ Yes</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" name="{{ question }}" value="No" required onchange="updateProgress()">
+                        <span>❌ No</span>
+                    </label>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="d-flex justify-content-between mt-4">
+                <a href="{{ url_for('session_page') }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+                <button type="submit" class="btn btn-primary">
+                    Submit <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <footer>
+        <img src="{{ url_for('static', filename='WeCareheart.png') }}" alt="Logo">
+        <span> Made with ❤️ by Team WeCare ☀️</span>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        function updateProgress() {
+            const totalQuestions = document.querySelectorAll('.question-container').length;
+            const answeredQuestions = document.querySelectorAll('input[type="radio"]:checked').length;
+            const progressPercentage = (answeredQuestions / totalQuestions) * 100;
+            
+            document.getElementById('progress').style.width = progressPercentage + '%';
+            document.getElementById('progress-percentage').textContent = Math.round(progressPercentage);
+        }
+    </script>
+</body>
+</html>

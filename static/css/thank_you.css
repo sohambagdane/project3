@@ -1,0 +1,118 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #7b68ee;
+    --background-gradient-start: #e6f2ff;
+    --background-gradient-end: #f3e7ff;
+    --text-color-dark: #2c3e50;
+    --text-color-light: #ffffff;
+    --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, var(--background-gradient-start), var(--background-gradient-end));
+    color: var(--text-color-dark);
+    line-height: 1.6;
+}
+
+/* Header */
+header {
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    color: var(--text-color-light);
+    padding: 2rem;
+    text-align: center;
+}
+
+h1 {
+    font-size: 20px;
+    letter-spacing: -0.5px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Main content */
+main {
+    flex: 1; /* Ensures footer stays at bottom */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+/* Feedback box */
+#judgeGemini {
+    margin: 30px;
+    border: 2px solid black;
+    padding: 20px;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+/* Footer */
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: #ffffff;
+    color: #00838f; /* Dark Tiffany blue */
+    font-weight: bold;
+    border-top: 2px solid #b2ebf2;
+    width: 100%;
+}
+
+footer img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+    object-fit: cover;
+}
+
+footer span {
+    font-size: 0.9rem;
+    color: var(--text-color-dark);
+    display: flex;
+    align-items: center;
+}
+
+/* Button styling */
+.sbtn {
+    width: 150px;
+    height: auto;
+    align-items: center;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Responsive footer fix */
+@media (max-width: 768px) {
+    footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 10px;
+    }
+
+    footer img {
+        margin-bottom: 10px;
+    }
+}

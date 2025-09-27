@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('session_page') }}">
+            <img src="static/WeCare_bg.png" alt="WeCare Logo" style="height: 55px; width: auto;">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/closed_ended">Take Test 📝</a>
+                  </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('chat') }}">Chat with me? 💬</a>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('talk_to_me') }}">Talk to me? 🎙️ </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('image_analysis') }}">Image Analysis 📸</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('mental_health_report') }}"> Mental Health Analysis 📊</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ url_for('thank_you') }}"> Assessment Summary 📝 </a>
+                </li>
+            </ul>
+            <!-- Move the logout button to the right -->
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item logout">
+                    <a class="nav-link active" href="{{ url_for('login') }}">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

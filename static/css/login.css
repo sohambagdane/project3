@@ -1,0 +1,154 @@
+body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 50%, #90CAF9 100%);
+            background-size: cover;
+            background-attachment: fixed;
+            /* padding-top: 70px; */
+        }
+
+        .navbar {
+            background-color: #ffffff;
+        }
+
+        .navbar-nav .nav-link {
+            color: black;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: #308ef1;
+            color: white;
+            box-shadow: 0 0 10px rgb(0, 179, 255), 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+        }
+
+        footer img {
+            height: 40px;
+            width: 40px;
+            object-fit: contain;
+            border-radius: 50%;
+        }
+
+        footer span {
+            font-size: 0.9rem;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+
+        .container {
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .form-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            margin: auto;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+        .form-group input {
+            border-radius: 25px;
+        }
+
+        .btn {
+            border-radius: 25px;
+            font-size: 16px;
+            padding: 10px 20px;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .btn-dark {
+            background-color: #1c1c1c;
+            border: none;
+        }
+
+        .btn-dark:hover {
+            background-color: #0f0f0f;
+            transform: scale(1.05);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #42A5F5 0%, #1E88E5 100%);
+            border: none;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #1E88E5 0%, #1565C0 100%);
+            transform: scale(1.05);
+        }
+
+        h2 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .input-group-append button {
+            border-radius: 0 25px 25px 0;
+            border-left: none;
+            background-color: #f8f9fa;
+            transition: all 0.3s ease;
+        }
+        
+        .input-group-append button:hover {
+            background-color: #e9ecef;
+        }
+        
+        .input-group input {
+            border-radius: 25px 0 0 25px !important;
+        }
+
+        /* Password toggle styling */
+.input-group-append button {
+    border-left: none;
+    border-radius: 0 25px 25px 0;
+    background-color: #f8f9fa;
+}
+
+.input-group-append button:hover {
+    background-color: #e9ecef;
+}
+
+.input-group input {
+    border-radius: 25px 0 0 25px !important;
+}
+
+.fa-eye, .fa-eye-slash {
+    width: 20px;
+}
+/* Make eye icon black */
+.input-group-append button i {
+    color: #000 !important;
+}
+
+/* Keep black on hover */
+.input-group-append button:hover i {
+    color: #000 !important;
+}
+
+/* Darken the button border */
+.input-group-append button {
+    border-color: #dee2e6;
+}

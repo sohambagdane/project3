@@ -1,0 +1,235 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-gradient-start: #4481eb;
+    --primary-gradient-end: #04befe;
+    --primary-gradient: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+    --primary-gradient-hover: linear-gradient(135deg, var(--primary-gradient-end) 0%, var(--primary-gradient-start) 100%);
+
+    --background-gradient-start: #e9f5ff; /* Lighter blue */
+    --background-gradient-end: #f8f0ff; /* Lighter purple */
+    --background-gradient: linear-gradient(135deg, var(--background-gradient-start) 0%, var(--background-gradient-end) 100%);
+
+    --text-dark: #343a40;
+    --text-muted: #6c757d;
+    --text-light: #ffffff;
+    --card-bg: #ffffff;
+    --card-border: #dee2e6;
+    --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    --border-radius: 0.5rem; /* 8px */
+    --border-radius-lg: 0.75rem; /* 12px */
+}
+
+/* Basic Reset & Body */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--background-gradient);
+    background-attachment: fixed; /* Keep gradient fixed */
+    min-height: 100vh;
+    color: var(--text-dark);
+    display: flex; /* For potential sticky footer */
+    flex-direction: column;
+}
+
+/* Make main content grow */
+.container {
+    flex: 1 0 auto;
+}
+
+/* Header Specifics */
+header .lead {
+    color: var(--text-muted);
+}
+
+/* Card Styling */
+.card {
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--card-shadow);
+    background: var(--card-bg);
+    overflow: hidden; /* Contain child elements */
+}
+.card-title {
+    color: var(--primary-gradient-start);
+    font-weight: 600;
+}
+
+/* Form Styling */
+#uploadForm label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+.form-control {
+    border-radius: var(--border-radius);
+}
+.form-control:focus {
+    border-color: var(--primary-gradient-start);
+    box-shadow: 0 0 0 0.25rem rgba(68, 129, 235, 0.25);
+}
+.form-text {
+    font-size: 0.85em;
+}
+
+/* Button Styling */
+.btn-analyze {
+    background: var(--primary-gradient);
+    border: none;
+    padding: 0.75rem 1.25rem; /* Standard BS padding */
+    font-weight: 500;
+    color: var(--text-light);
+    border-radius: var(--border-radius);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn-analyze:hover {
+    background: var(--primary-gradient-hover);
+    color: var(--text-light); /* Ensure text stays white */
+    transform: translateY(-2px);
+}
+.btn-analyze:disabled {
+    background: var(--primary-gradient);
+    opacity: 0.65;
+}
+
+/* Loading Indicator Styles (Moved from HTML) */
+.loading-container {
+    display: none; /* Hidden by default */
+    margin: 2.5rem auto; /* More margin */
+    text-align: center;
+}
+
+.loading-spinner {
+    width: 45px;
+    height: 45px;
+    border: 4px solid #f3f3f3; /* Lighter border */
+    border-top: 4px solid var(--primary-gradient-start); /* Blue spinner part */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem; /* Adjusted margin */
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Image Preview Styling */
+.img-preview-container {
+    max-width: 100%;
+    overflow: hidden;
+    background: #f8f9fa; /* Light background for image */
+    padding: 0.5rem; /* Small padding around image */
+    border-radius: var(--border-radius);
+    display: inline-block; /* Fit container to image */
+    border: 1px solid var(--card-border);
+}
+
+.uploaded-image-preview {
+    display: block; /* Remove extra space below image */
+    max-height: 450px; /* Increased max height */
+    width: auto;      /* Maintain aspect ratio */
+    max-width: 100%;
+    border-radius: calc(var(--border-radius) - 0.25rem) !important; /* Slightly smaller radius inside padding */
+}
+
+/* Analysis Content Styling */
+.analysis-content {
+    line-height: 1.7;
+    font-size: 1rem;
+    color: var(--text-dark);
+    overflow-wrap: break-word; /* Break long words */
+    padding: 0.5rem; /* Add slight padding */
+}
+
+.analysis-content p,
+.analysis-content li {
+    margin-bottom: 1rem;
+}
+
+.analysis-content h1,
+.analysis-content h2,
+.analysis-content h3,
+.analysis-content h4 { /* Added h4 */
+    color: var(--primary-gradient-start); /* Consistent heading color */
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem; /* Slightly less space below heading */
+    font-weight: 600;
+}
+
+.analysis-content ul,
+.analysis-content ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+.analysis-content li {
+    margin-bottom: 0.5rem; /* Less space between list items */
+}
+
+.analysis-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    margin: 1rem 0;
+}
+.analysis-content code { /* Basic code styling */
+    background-color: #e9ecef;
+    padding: 0.2em 0.4em;
+    border-radius: 0.25rem;
+    font-size: 0.9em;
+}
+.analysis-content blockquote { /* Basic blockquote styling */
+    border-left: 4px solid var(--primary-gradient-start);
+    padding-left: 1rem;
+    margin-left: 0;
+    margin-bottom: 1rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
+
+/* Animation Styles (Moved from HTML) */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+
+/* Basic Footer Styling (if used) */
+footer.border-top {
+    border-top-color: var(--card-border) !important;
+    background-color: var(--card-bg); /* Match card background */
+    flex-shrink: 0; /* Ensure it stays at bottom */
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    /* Container padding handled by Bootstrap */
+    header {
+        padding: 1.5rem 0;
+    }
+    .card {
+        border-radius: var(--border-radius); /* Slightly smaller radius */
+    }
+    .analysis-content {
+        font-size: 0.95rem; /* Slightly smaller font on mobile */
+    }
+    h1.display-5 {
+        font-size: 2.25rem; /* Adjust heading size */
+    }
+}
+
+/* Removed previous specific overrides for col-lg-8 and analysis-content padding,
+   relying more on Bootstrap grid and standard padding */

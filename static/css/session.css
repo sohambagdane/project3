@@ -1,0 +1,143 @@
+/* Keep all previous imports and root variables */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #7b68ee;
+    --light-blue: #e6f2ff;
+    --light-purple: #f3e7ff;
+    --text-dark: #2c3e50;
+    --text-light: #f8f9fa;
+    --text-muted: #6c757d;
+    --white: #ffffff;
+    --light-grey-bg: #e9ecef;
+    --card-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    --card-shadow-hover: 0 12px 30px rgba(0, 0, 0, 0.12);
+    --border-radius-lg: 15px;
+    --border-radius-sm: 8px;
+}
+
+/* Keep previous resets and body layout */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { height: 100%; }
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, var(--light-blue) 0%, var(--light-purple) 100%);
+    color: var(--text-dark);
+    line-height: 1.7;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+main.content-area { flex: 1 0 auto; padding-bottom: 3rem; }
+
+/* Keep header styles */
+.page-header {
+    background: linear-gradient(110deg, var(--primary-color), var(--secondary-color));
+    color: var(--text-light);
+    padding: 2.5rem 1.5rem;
+    margin-bottom: 2rem;
+    border-bottom-left-radius: var(--border-radius-lg);
+    border-bottom-right-radius: var(--border-radius-lg);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+.page-header h1 { font-size: 2.25rem; font-weight: 600; margin-bottom: 0.5rem; }
+.page-header .lead { font-size: 1.2rem; font-weight: 400; opacity: 0.9; }
+.page-header .text-muted { color: rgba(255, 255, 255, 0.8) !important; }
+.section-title { font-weight: 600; color: var(--secondary-color); margin-bottom: 2.5rem !important; }
+
+/*
+    REMOVED the .profile-dropdown-container rule as the element was removed from session.html
+*/
+
+/* Keep feature slider & card styles */
+.feature-slider { max-width: 1140px; }
+.feature-card {
+    background: var(--white);
+    border-radius: var(--border-radius-lg);
+    padding: 2.5rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 380px;
+    margin: 1rem 0;
+    border: 1px solid #eee;
+}
+.feature-card:hover { transform: translateY(-10px); box-shadow: var(--card-shadow-hover); }
+.feature-icon { color: var(--primary-color); margin-bottom: 1.5rem; }
+.feature-card h5 { font-size: 1.4rem; color: var(--secondary-color); margin-bottom: 1rem; font-weight: 600; }
+.feature-card p { color: var(--text-dark); flex-grow: 1; margin-bottom: 1.5rem; font-size: 0.95rem; }
+.feature-card .btn-feature {
+    background: var(--primary-color);
+    color: var(--text-light);
+    border: none;
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    align-self: center;
+    width: fit-content;
+    box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
+}
+.feature-card .btn-feature:hover { background: var(--secondary-color); transform: scale(1.05); box-shadow: 0 6px 15px rgba(123, 104, 238, 0.4); }
+
+/* Keep Carousel Controls Styling */
+.carousel-control-prev,
+.carousel-control-next {
+    width: 45px;
+    height: 45px;
+    background-color: var(--light-grey-bg);
+    border-radius: 50%;
+    opacity: 0.8;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+    background-image: none !important;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+.carousel-control-prev { left: -55px; }
+.carousel-control-next { right: -55px; }
+
+.carousel-control-prev:hover,
+.carousel-control-next:hover {
+    opacity: 1;
+    background-color: #d3d9df;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 1.2rem;
+    height: 1.2rem;
+    filter: invert(15%) sepia(21%) saturate(1183%) hue-rotate(176deg) brightness(90%) contrast(89%);
+}
+
+
+/* Keep footer styles */
+.app-footer { flex-shrink: 0; display: flex; justify-content: center; align-items: center; background: var(--white); padding: 1rem 1.5rem; width: 100%; box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.06); border-top: 1px solid #e0e0e0; margin-top: auto; }
+.app-footer img { height: 30px; width: 30px; margin-right: 10px; object-fit: contain; }
+.app-footer span { font-size: 0.9rem; color: var(--text-dark); font-weight: 500; }
+
+/* Keep responsive adjustments */
+@media (max-width: 992px) {
+    .carousel-control-prev { left: -20px; }
+    .carousel-control-next { right: -20px; }
+    .feature-card { min-height: 360px; padding: 2rem;}
+}
+@media (max-width: 768px) {
+    .page-header h1 { font-size: 1.8rem; }
+    .page-header .lead { font-size: 1.1rem; }
+    .feature-card { min-height: auto; padding: 1.5rem; }
+    .feature-card h5 { font-size: 1.25rem; }
+    .feature-card p { font-size: 0.9rem; }
+    .carousel-control-prev { left: 5px; width: 40px; height: 40px; }
+    .carousel-control-next { right: 5px; width: 40px; height: 40px; }
+    /* No need for .profile-dropdown-container adjustments anymore */
+    .app-footer { padding: 0.8rem 1rem; }
+    .app-footer span { font-size: 0.85rem; }
+}

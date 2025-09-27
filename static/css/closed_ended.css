@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #E3F2FD 0%, #BBDEFB 50%, #90CAF9 100%);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+    padding-bottom: 100px; /* Space for footer */
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+}
+
+h1 {
+    color: rgb(101, 101, 101);
+    margin-bottom: 10px;
+    font-size: 2.5em;
+    font-weight: 600;
+}
+
+.subtitle {
+    color: rgba(82, 65, 80, 0.8);
+    font-size: 1.1em;
+    margin-bottom: 20px;
+}
+
+.progress-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 20px;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #edf2f7;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #4481eb 0%, #04befe 100%);
+    transition: width 0.4s ease-in-out;
+}
+
+.progress-text {
+    text-align: center;
+    margin-top: 8px;
+    font-size: 14px;
+    color: #4a5568;
+    font-weight: 500;
+}
+
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 25px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.question-container {
+    margin-bottom: 25px;
+    padding: 15px;
+    border-bottom: 1px solid #edf2f7;
+    transition: all 0.3s ease;
+}
+
+.question-container:hover {
+    background-color: rgba(240, 244, 248, 0.5);
+    border-radius: 8px;
+}
+
+.question-label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 12px;
+    color: #0c071a;
+}
+
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+
+.radio-option:hover {
+    background-color: #d3d4d5;
+    transform: translateY(-2px);
+}
+
+.radio-option input[type="radio"] {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, #4481eb 0%, #04befe 100%);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(90deg, #04befe 0%, #4481eb 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(68, 129, 235, 0.3);
+}
+
+.btn-outline-secondary {
+    transition: all 0.3s ease;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #f8f9fa;
+}
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    background-color: #ffffff;
+    color: #00838f;
+    font-weight: bold;
+    border-top: 2px solid #b2ebf2;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+footer img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    form {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+}
+
+
+
+/* Footer styles */
+footer {
+    position: relative; /* Ensures it scrolls with the page */
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+    background-color: #ffffff; /* White footer */
+    color: #00838f; /* Dark Tiffany blue */
+    font-weight: bold;
+    border-top: 2px solid #b2ebf2;
+    width: 100%;
+}
+
+
+/* Navbar text styling */
+.navbar-text {
+    padding-left: 15px;
+    border-left: 1px solid rgba(0,0,0,0.1);
+    margin-left: 15px;
+}
+
+.navbar-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.navbar-subtitle {
+    font-size: 0.8rem;
+    color: #6c757d;
+    line-height: 1.2;
+}
+
+/* Adjust header spacing */
+.header {
+    margin-top: 20px;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.subtitle {
+    color: #5f5163;
+    font-size: 1em;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 992px) {
+    .navbar-text {
+        display: none !important;
+    }
+    
+    .header {
+        margin-top: 0;
+        padding: 20px 0;
+    }
+}

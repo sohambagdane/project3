@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{logo_name}} Voice/Text Assistant</title> <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nav.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/nav.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/talk_to_me.css') }}"> <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='logo.png') }}">
+    <style>
+        /* You can keep inline styles or move them to talk_to_me.css */
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+             <a class="navbar-brand" href="{{ url_for('session_page') }}">
+                 <img src="static/WeCare_bg.png" alt="WeCare Logo" style="height: 55px; width: auto;">
+             </a>
+             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                 aria-label="Toggle navigation">
+                 <span class="navbar-toggler-icon"></span>
+             </button>
+             <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                     <li class="nav-item">
+                         <a class="nav-link" href="/closed_ended">Take Test 📝</a>
+                       </li>
+                     <li class="nav-item">
+                         <a class="nav-link active" href="{{ url_for('chat') }}">Chat with me? 💬</a>
+                     </li>
+
+                     <li class="nav-item">
+                         <a class="nav-link active" href="{{ url_for('talk_to_me') }}">Talk to me? 🎙️⌨️ </a> </li>
+                     <li class="nav-item">
+                         <a class="nav-link active" href="{{ url_for('image_analysis') }}">Image Analysis 📸</a>
+                     </li>
+                     <li class="nav-item">
+                         <a class="nav-link active" href="{{ url_for('mental_health_report') }}"> Mental Health Analysis 📊</a>
+                     </li>
+                     <li class="nav-item">
+                         <a class="nav-link active" href="{{ url_for('thank_you') }}"> Assessment Summary 📝 </a>
+                     </li>
+                 </ul>
+                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                     <li class="nav-item logout">
+                         <a class="nav-link active" href="{{ url_for('login') }}">
+                             <i class="fas fa-sign-out-alt"></i> Logout
+                         </a>
+                     </li>
+                 </ul>
+             </div>
+         </div>
+    </nav>
+
+    <div class="container">
+        <header>
+            <h1>WeCare Assistant 🤖</h1>
+            <p class="subtitle" style="font-size: 16px;">Your safe space to talk, type, and feel heard 💖</p> <p class="subtitle" style="font-size: 14px;">Your Face Cam is used for a better understanding of your
+                behavior patterns 👁️</p>
+        </header>
+    </div>
+    <main>
+        <div id="video-container">
+            <img id="video" src="/video_feed" alt="Video Stream">
+        </div>
+
+        <div class="container">
+            <div id="chatbox">
+                <div class="message user-msg">
+                     <div class="message-content">Hello !!</div>
+                     <div class="user-emoji">👋</div>
+                 </div>
+                 <div class="message bot-msg">
+                     <div class="bot-emoji">🤖</div>
+                     <div class="message-content">Hi there! I'm WeCare Bot, your digital mental health assistant. How can
+                         I help you today? Feel free to talk or type.</div> </div>
+            </div>
+
+            <div id="controls">
+                <div class="input-area">
+                     <input type="text" id="text-input" placeholder="Type your message here...">
+                     <button id="send-btn" title="Send Message">
+                         <i class="fas fa-paper-plane"></i> </button>
+                </div>
+                <button id="mic-btn" title="Tap to Speak">
+                    <span class="mic-icon">🎤</span>
+                    <span class="mic-label">Tap to speak</span>
+                </button>
+            </div>
+            </div>
+    </main>
+
+    <script>
+        const video = document.getElementById('video');
+        video.src = "/video_feed";
+
+        const micBtn = document.getElementById('mic-btn');
+        const micLabel = micBtn.querySelector('.mic-label');
+        // *** NEW ELEMENT REFERENCES ***
+        const textInput = document.getElementById('text-input');
+        const sendBtn = document.getElementById('send-btn');
+        const chatbox = document.getElementById('chatbox'); // Get chatbox reference earlier
+
+        function stopSpeak() {
+            if (speechSynthesis.speaking || speechSynthesis.pending) {
+                console.log("Stopping speech...");
+                speechSynthesis.cancel();
+            } else {
+                console.log("No speech to stop.");
+            }
+        }
+        // Stop speech when the tab is inactive
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden) {
+                speechSynthesis.cancel();
+            }
+        });
+
+        // Stop speech when the user leaves or refreshes the page
+        window.addEventListener("beforeunload", () => {
+            speechSynthesis.cancel();
+        });
+
+
+        // *** EVENT LISTENERS ***
+        micBtn.onclick = () => {
+            stopSpeak(); // Stop any previous bot speech
+            startListening();
+        };
+
+        // Send text message on button click
+        sendBtn.onclick = () => {
+            const userInput = textInput.value;
+            if (userInput.trim() !== "") {
+                stopSpeak(); // Stop any previous bot speech
+                sendMessage(userInput);
+                textInput.value = ''; // Clear input field
+            }
+        };
+
+        // Send text message on Enter key press
+        textInput.addEventListener('keypress', function (e) {
+             if (e.key === 'Enter' && !e.shiftKey) { // Send on Enter, allow Shift+Enter for new lines if needed later
+                 const userInput = textInput.value;
+                 if (userInput.trim() !== "") {
+                     stopSpeak(); // Stop any previous bot speech
+                     sendMessage(userInput);
+                     textInput.value = ''; // Clear input field
+                     e.preventDefault(); // Prevent default form submission/newline
+                 }
+             }
+         });
+
+        // *** MODIFIED sendMessage FUNCTION ***
+        function sendMessage(userInput) {
+            if (userInput.trim() === "") return; // Exit if input is empty
+
+            // Display user message
+            chatbox.innerHTML += `<div class="message user-msg"><div class="message-content">${userInput}</div></div>`;
+            chatbox.scrollTop = chatbox.scrollHeight; // Scroll to bottom
+
+            // Show loading indicator
+            const loadingMessage = document.createElement('div');
+            loadingMessage.className = "message bot-msg loading-msg"; // Add a class for potential specific styling
+            loadingMessage.innerHTML = `<div class="bot-emoji">🤖</div><div class="message-content">Thinking...</div>`;
+            chatbox.appendChild(loadingMessage);
+            chatbox.scrollTop = chatbox.scrollHeight; // Scroll again
+
+            // Disable controls during processing
+            micBtn.disabled = true;
+            textInput.disabled = true;
+            sendBtn.disabled = true;
+            micBtn.style.opacity = 0.5;
+            textInput.style.opacity = 0.5; // Optional visual cue
+            sendBtn.style.opacity = 0.5;   // Optional visual cue
+
+            // Send data to backend
+            fetch('/talk_to_me', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded', // Standard form submission
+                },
+                body: `user_input=${encodeURIComponent(userInput)}` // Send input under the 'user_input' key
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`); // Handle HTTP errors
+                }
+                return response.json();
+             })
+            .then(data => {
+                chatbox.removeChild(loadingMessage); // Remove loading indicator
+
+                // Display bot response
+                chatbox.innerHTML += `<div class="message bot-msg"><div class="bot-emoji">🤖</div><div class="message-content">${data.response}</div></div>`;
+                chatbox.scrollTop = chatbox.scrollHeight; // Scroll to bottom
+
+                speak(data.response); // Speak the response
+            })
+            .catch(error => {
+                console.error('Error fetching response:', error);
+                chatbox.removeChild(loadingMessage); // Remove loading indicator on error too
+                // Display error message in chat
+                chatbox.innerHTML += `<div class="message bot-msg error-msg"><div class="bot-emoji">🤖</div><div class="message-content">Sorry, something went wrong. Please try again.</div></div>`;
+                chatbox.scrollTop = chatbox.scrollHeight;
+            })
+            .finally(() => {
+                // Re-enable controls regardless of success or failure
+                micBtn.disabled = false;
+                textInput.disabled = false;
+                sendBtn.disabled = false;
+                micBtn.style.opacity = 1;
+                textInput.style.opacity = 1;
+                sendBtn.style.opacity = 1;
+                // Optionally, focus the text input again for quick typing
+                // textInput.focus();
+            });
+        }
+
+        // startListening function remains the same
+         function startListening() {
+             // Check for browser support
+             if (!('SpeechRecognition' in window || 'webkitSpeechRecognition' in window)) {
+                 alert("Sorry, your browser doesn't support Speech Recognition. Try Chrome or Edge.");
+                 return;
+             }
+
+             const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+             recognition.lang = 'en-US';
+             recognition.interimResults = false; // We want the final result
+             recognition.maxAlternatives = 1;    // We only need the most likely transcript
+
+             recognition.onstart = function () {
+                 micBtn.classList.add('listening');
+                 micLabel.textContent = "Listening...";
+                 // Disable text input while listening
+                 textInput.disabled = true;
+                 sendBtn.disabled = true;
+                 textInput.style.opacity = 0.5;
+                 sendBtn.style.opacity = 0.5;
+             };
+
+             recognition.start(); // Start listening
+
+             recognition.onresult = function (event) {
+                 const userInput = event.results[0][0].transcript;
+                 console.log('Speech recognized:', userInput);
+                 sendMessage(userInput); // Send the recognized speech
+             };
+
+             recognition.onerror = function (event) {
+                 console.error('Speech recognition error:', event.error);
+                 let errorMsg = "Speech recognition error.";
+                 if (event.error === 'no-speech') {
+                     errorMsg = "Didn't hear anything. Try again?";
+                 } else if (event.error === 'audio-capture') {
+                     errorMsg = "Audio capture error. Check microphone permissions.";
+                 } else if (event.error === 'not-allowed') {
+                     errorMsg = "Microphone access denied. Please allow access.";
+                 }
+                 // Display error briefly or in chat? For now, console log is fine.
+                 micLabel.textContent = errorMsg; // Show error briefly on button
+                 setTimeout(() => { micLabel.textContent = "Tap to speak"; }, 3000); // Reset label after 3s
+             };
+
+             recognition.onend = function () {
+                 micBtn.classList.remove('listening');
+                 micLabel.textContent = "Tap to speak";
+                 // Re-enable text input when listening ends (unless bot is processing)
+                 if (!micBtn.disabled) { // Check if sendMessage is already running
+                    textInput.disabled = false;
+                    sendBtn.disabled = false;
+                    textInput.style.opacity = 1;
+                    sendBtn.style.opacity = 1;
+                 }
+             };
+         }
+
+        // speak function remains the same
+        function speak(text) {
+             // (Your existing speak function logic with isBotSpeaking, etc.)
+             // ... (keep the robust speak function from your original code) ...
+             return new Promise((resolve) => {
+                 if (currentUtterance) {
+                     speechSynthesis.cancel();
+                 }
+
+                 currentUtterance = new SpeechSynthesisUtterance(text);
+                 isBotSpeaking = true;
+
+                 currentUtterance.onend = () => {
+                     isBotSpeaking = false;
+                     currentUtterance = null;
+                     resetInteractionTimer(); // Restart timer after speech ends
+                     resolve();
+                 };
+
+                 currentUtterance.onerror = (event) => { // Added event parameter for logging
+                     console.error("Speech synthesis error:", event.error)
+                     isBotSpeaking = false;
+                     currentUtterance = null;
+                     resetInteractionTimer();
+                     resolve(); // Resolve even on error so UI isn't stuck
+                 };
+
+                 speechSynthesis.speak(currentUtterance);
+             });
+         }
+
+        // --- Keep your existing inactivity/encouragement logic ---
+        let interactionTimeout;
+        const INACTIVITY_DELAY = 15000; // 15 seconds (Adjust as needed)
+        let isBotSpeaking = false;
+        let currentUtterance = null;
+
+        function resetInteractionTimer() {
+             clearTimeout(interactionTimeout);
+             if (!isBotSpeaking) { // Only set timer if bot isn't currently speaking
+                 interactionTimeout = setTimeout(triggerEncouragement, INACTIVITY_DELAY);
+             }
+         }
+
+        const activityEvents = ['click', 'keydown', 'touchstart', 'mousemove', 'input']; // Added 'input' event
+         activityEvents.forEach(eventType => {
+             document.addEventListener(eventType, () => {
+                 resetInteractionTimer(); // Reset timer on any user activity
+             });
+         });
+
+         function triggerEncouragement() {
+            if (isBotSpeaking) return; // Don't interrupt bot
+
+            console.log("Triggering encouragement due to inactivity..."); // Debug log
+
+            fetch('/current_mood') // Get current mood from backend
+                .then(response => response.json())
+                .then(moodData => {
+                    // Generate encouragement message based on mood
+                    return fetch('/generate_encouragement', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ mood: moodData.mood })
+                    });
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (isBotSpeaking) return; // Double check before showing/speaking
+
+                    const chatbox = document.getElementById('chatbox');
+                    // Add a specific class for encouragement messages
+                    chatbox.innerHTML += `
+                        <div class="message bot-msg encouragement-msg">
+                            <div class="bot-emoji">💡</div> <div class="message-content">${data.message}</div>
+                        </div>`;
+                    chatbox.scrollTop = chatbox.scrollHeight;
+
+                    // Speak the encouragement message
+                    speak(data.message).then(() => {
+                        // Timer is reset automatically in speak()'s onend handler
+                    });
+                })
+                .catch(error => {
+                    console.error('Encouragement feature error:', error);
+                    resetInteractionTimer(); // Reset timer even if fetch fails
+                });
+        }
+
+        // Initial timer start
+        document.addEventListener('DOMContentLoaded', () => {
+            resetInteractionTimer();
+        });
+
+        // Stop speech when leaving page (already included above)
+        // window.addEventListener('beforeunload', () => { ... });
+
+    </script>
+
+</body>
+</html>

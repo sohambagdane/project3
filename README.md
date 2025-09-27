@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # WeCare - Mental Health Support Platform
 
 A Flask-based web application that provides mental health support through various features including emotion detection, chat support, and mental health analysis.
@@ -97,3 +98,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - OpenCV for face detection
 - Google Gemini AI for chat support
 - FPDF for PDF generation 
+=======
+# project
+>>>>>>> 068220559657ac5777f213f0470920ca3f60c5ed
